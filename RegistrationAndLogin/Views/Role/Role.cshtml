@@ -1,0 +1,48 @@
+﻿@model RegistrationAndLogin.Models.Roles
+@{
+    ViewBag.Title = "Role";
+
+}
+
+
+@if (ViewBag.Message != null)
+        {
+<div class="alert alert-success">
+    <strong>Success!</strong> @ViewBag.Message
+</div>
+        }
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Ajout Role</h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddRole", "Role", FormMethod.Post))
+    {
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                  
+
+                        @Html.HiddenFor(x => x.RoleID)
+                        <label>role</label>
+                        @Html.TextBoxFor(x => x.Rolename, new { @class = "form-control" })
+
+                    
+
+                   
+                </div>
+                <br/>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+
+    </div>
+</div>

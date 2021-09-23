@@ -1,0 +1,141 @@
+﻿@model List<RegistrationAndLogin.Models.Users>
+@{
+    ViewBag.Title = "ListUsers";
+   
+}
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-danger">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+
+@if (ViewBag.Message1 != null)
+{
+    <div class="alert alert-danger">
+        <strong>Success!</strong> @ViewBag.Message1
+    </div>
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Affiche utilisateurs</h3>
+    </div>
+    <!-- /.card-header -->
+
+    <div class="card-body">
+        <div class="container">
+            <div class="form-group">
+
+                <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                    <thead>
+                        <tr>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>date naissance</th>
+
+                            <th>Email</th>
+                            <th>Etat</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.datedesactivation</td>
+
+                                <td>@item.EmailID</td>
+
+                                <td>
+
+                                    @if (item.RoleID == 21)
+                                    {
+                                        <span class="badge badge-success">Admin</span>
+
+                                    }
+                                   else
+                                    {
+                                        <span class="badge badge-success">Client</span>
+
+                                    }
+                                    @if (@item.datedesactivation == @item.DateOfBirth)
+                                    {
+                                        <span class="badge badge-success">active</span>
+
+                                    }
+
+                                    else if (@item.datedesactivation != @item.DateOfBirth && (DateTime.Now - DateTime.Parse(@item.datedesactivation.Day.ToString() + "/" + @item.datedesactivation.Month.ToString() + "/" + @item.datedesactivation.Year.ToString())).Days < 2)
+                                    {
+                                        <span class="badge badge-danger">Inactive</span>
+
+
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">active</span>
+
+
+
+                                    }
+
+                                </td>
+                                <td>
+                                    <i class="btn btn-success">Edit</i>
+                                    <a href="@Url.Action("desactivation", new { item.IdUser })">
+                                        <i class="btn btn-dark">Inactive</i>
+                                    </a>
+                                    <a href="#myModal-@item.IdUser" class="trigger-btn" data-toggle="modal"><i class="btn btn-danger">Delete</i></a>
+                            </tr>
+                            <div id="myModal-@item.IdUser" class="modal hide fade">
+                                <div class="modal-dialog modal-confirm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title w-100">
+                                                Suppression
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-center">Voulez vous supprimer ?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="@Url.Action("Delete", new { item.IdUser })">
+                                                <i class="btn btn-success">Yes</i>
+                                            </a>
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<!-- /.card-body -->
+<div class="card-footer clearfix">
+
+</div>
+</div>
+

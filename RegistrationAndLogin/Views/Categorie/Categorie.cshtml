@@ -1,0 +1,46 @@
+﻿@model RegistrationAndLogin.Models.Categories
+@{
+    ViewBag.Title = "Categorie";
+   
+}
+
+@if (ViewBag.Message != null)
+        {
+<div class="alert alert-success">
+    <strong>Success!</strong> @ViewBag.Message
+</div>
+        }
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Ajout Categorie</h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddCategorie", "Categorie", FormMethod.Post))
+    {
+        <div class="card-body">
+            <div class="container">
+                <div class="form-group">
+                    <div class="row">
+                        @Html.HiddenFor(x => x.CODE_CATEGORIE)
+                        <label>produit</label>
+                        @Html.TextBoxFor(x => x.LIBELLE_CATEGORIE, new { @class = "form-control" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+
+    </div>
+</div>
+
+

@@ -1,0 +1,47 @@
+﻿@model RegistrationAndLogin.Models.Bank
+@{
+    ViewBag.Title = "Bank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Ajout de Bank</h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddBank", "Bank", FormMethod.Post))
+    {
+        <div class="card-body">
+            <div class="container">
+                <div class="form-group">
+                    <div class="row">
+                        @Html.HiddenFor(x => x.idbank)
+                        <label>Bank</label>
+                        @Html.TextBoxFor(x => x.namebank, new { @class = "form-control" }) <br/>
+                        <label>taux d'intéret</label>
+                        @Html.TextBoxFor(x => x.interestrate, new { @class = "form-control" }) <br/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+
+    </div>
+</div>
+

@@ -1,0 +1,95 @@
+﻿@model RegistrationAndLogin.Models.Users
+
+@{
+    ViewBag.Title = "modifClientProfil";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+@using RegistrationAndLogin.Models;
+@using (Html.BeginForm("modif", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Edit profil</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="container">
+               
+
+                    @if (Model != null)
+                    {
+                        <input type="hidden" name="IdUser" id="IdUser" value="@Model.IdUser" />
+                    }
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="input-group">
+
+
+                                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @placeholder = "FirstName" } })
+                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="input-group">
+
+
+                                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control", @placeholder = "LastName" } })
+                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                
+                <br />
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="input-group">
+
+
+                            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                            @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                            @Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="input-group">
+
+
+
+                            @Html.EditorFor(model => model.numtelephone, new { htmlAttributes = new { @class = "form-control", @placeholder = "numtelephone" } })
+                            @Html.ValidationMessageFor(model => model.numtelephone, "", new { @class = "text-danger" })
+
+            
+
+                        </div>
+                    </div>
+
+                </div>
+                <br />
+
+
+
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+        }
+
+

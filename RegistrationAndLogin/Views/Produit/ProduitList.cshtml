@@ -1,0 +1,92 @@
+﻿@model List<RegistrationAndLogin.Models.Prod>
+@{
+    ViewBag.Title = "ProduitList";
+
+}
+
+
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">affiche produits</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+        <table id="roles" style="width:900px;height:300px" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+            <thead>
+                <tr>
+                    <th>PRODUIT</th>
+                    <th>DESCRIPTION</th>
+                    <th>IMAGE</th>
+                    <th>CATEGORIE</th>
+                    <th>DATE SAISIE</th>
+                    <th>Prix</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.status != "resolu")
+                    { 
+                    <tr>
+                        <td>@item.LIBELLE_PRODUIT</td>
+                        <td>@item.DESCRIPTION_PRODUIT</td>
+                        <td>
+                            @{string path = "~/Fichier/" + @item.IMAGE_PRODUIT;}
+                            <img src="@Url.Content(path)" width="50" height="50" />
+                        </td>
+                        <td>@item.Categories.LIBELLE_CATEGORIE</td>
+                        <td>@item.DATE_SAISIE</td>
+                        <td>@item.Prix</td>
+                        <td>
+
+
+                            <a href="#myModal-@item.CODE_PRODUIT" class="trigger-btn" data-toggle="modal"><i class="btn btn-danger">Delete</i></a>
+                            <a href="@Url.Action("Produit", new { item.CODE_PRODUIT, item.DESCRIPTION_PRODUIT, item.LIBELLE_PRODUIT, item.Prix })"><i class="btn btn-success">Edit</i></a>
+                        </td>
+                    </tr>
+                    <div id="myModal-@item.CODE_PRODUIT" class="modal hide fade">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title w-100">
+                                        Suppression
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-center">Voulez vous supprimer ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="@Url.Action("Delete", new { item.CODE_PRODUIT })">
+                                        <i class="btn btn-success">Yes</i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                                    }
+
+                                }
+            </tbody>
+
+        </table>
+        @section scripts
+{
+            <script>
+
+                $(document).ready(function () {
+                    $("#roles").DataTable()
+                })
+            </script>
+
+        }
+        <!-- /.card-body -->
+    </div>
+

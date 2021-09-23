@@ -1,0 +1,82 @@
+﻿@model  List<RegistrationAndLogin.Models.Bank>
+@{
+    ViewBag.Title = "BankList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">affiche des Banks</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+        <table id="banks" style="width:900px;height:300px" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+            <thead>
+                <tr>
+
+                    <th>Bank</th>
+                    <th>Taux d'intéret</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    <tr>
+
+                        <td>@item.namebank</td>
+                        <td>@item.interestrate %</td>
+                        <td>
+                            <a href="@Url.Action("Bank", new { item.idbank, item.namebank })"><i class="btn btn-success">Edit</i></a>
+
+                            <a href="#myModal-@item.idbank" class="trigger-btn" data-toggle="modal"><i class="btn btn-danger">Delete</i></a>
+
+                    </tr>
+                    <div id="myModal-@item.idbank" class="modal hide fade">
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title w-100">
+                                        Suppression
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-center">Voulez vous supprimer ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="@Url.Action("Delete", new { item.idbank })">
+                                        <i class="btn btn-success">Yes</i>
+                                    </a>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                }
+            </tbody>
+
+        </table>
+        @section scripts
+{
+            <script>
+
+                $(document).ready(function () {
+                    $("#banks").DataTable()
+                })
+            </script>
+
+        }
+        <!-- /.card-body -->
+    </div>
+
+
+
+

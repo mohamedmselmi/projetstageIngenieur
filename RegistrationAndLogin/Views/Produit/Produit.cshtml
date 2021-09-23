@@ -1,0 +1,109 @@
+﻿@model RegistrationAndLogin.Models.Prod
+@{
+    ViewBag.Title = "Produit";
+
+}
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">Ajout Produit</h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddProduit", "Produit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            @if (Model != null)
+                            {
+                                <input type="hidden" name="CODE_PRODUIT" id="CODE_PRODUIT" value="@Model.CODE_PRODUIT" />
+                            }
+                            <label>CATEGORIE</label>
+                            <select id="CODE_CATEGORIE" name="CODE_CATEGORIE" class="form-control">
+
+
+                                @using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                                {
+                                    foreach (var data in dc.Categories.ToList())
+                                    {
+                                        <option value="@data.CODE_CATEGORIE"> @data.LIBELLE_CATEGORIE </option>
+                                    }
+
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>PRODUIT</label>
+                            @Html.ValidationMessageFor(x => x.LIBELLE_PRODUIT, "", new { @class = "error" })
+                            @Html.TextBoxFor(x => x.LIBELLE_PRODUIT, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>DESCRIPTION</label>
+                            @Html.ValidationMessageFor(x => x.DESCRIPTION_PRODUIT, "", new { @class = "error" })
+                            @Html.TextAreaFor(x => x.DESCRIPTION_PRODUIT, new { @class = "form-control" })
+                          
+                        </div>
+
+                        <div class="form-group">
+                            <label>IMAGE PRODUIT</label>
+                            @Html.EditorFor(x => x.URL_IMAGE_PRODUIT, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
+                            @Html.ValidationMessageFor(x => x.URL_IMAGE_PRODUIT, "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Prix</label>
+                            @Html.ValidationMessageFor(x => x.Prix, "", new { @class = "error" })
+                            @Html.TextBoxFor(x => x.Prix, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select id="Type" name="Type" class="form-control">
+
+                                <option value="Rent">louer </option>
+                                <option value="vendre">vendre </option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+
+    </div>
+</div>
+
+

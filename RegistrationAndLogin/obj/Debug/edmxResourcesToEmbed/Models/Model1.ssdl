@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="idbank" />
+    </Key>
+    <Property Name="idbank" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="namebank" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="interestrate" Type="real" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CODE_CATEGORIE" />
+    </Key>
+    <Property Name="CODE_CATEGORIE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LIBELLE_CATEGORIE" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DATE_SAISIE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="loan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="loanamont" Type="bigint" Nullable="false" />
+    <Property Name="loanterme" Type="bigint" Nullable="false" />
+    <Property Name="monthlyincome" Type="bigint" Nullable="false" />
+    <Property Name="idbank" Type="int" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="louer">
+    <Key>
+      <PropertyRef Name="idlouer" />
+    </Key>
+    <Property Name="idlouer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="datedebut" Type="datetime" Nullable="false" />
+    <Property Name="datefin" Type="datetime" Nullable="false" />
+    <Property Name="CODE_PRODUIT" Type="int" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Prod">
+    <Key>
+      <PropertyRef Name="CODE_PRODUIT" />
+    </Key>
+    <Property Name="CODE_PRODUIT" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CODE_CATEGORIE" Type="int" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="LIBELLE_PRODUIT" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="DESCRIPTION_PRODUIT" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IMAGE_PRODUIT" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="URL_IMAGE_PRODUIT" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DATE_SAISIE" Type="datetime" Nullable="false" />
+    <Property Name="Prix" Type="float" />
+    <Property Name="type" Type="nvarchar" MaxLength="50" />
+    <Property Name="remise" Type="int" Nullable="false" />
+    <Property Name="vu" Type="int" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="datedebut" Type="datetime" Nullable="false" />
+    <Property Name="datefin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="reclamation">
+    <Key>
+      <PropertyRef Name="idrec" />
+    </Key>
+    <Property Name="idrec" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titrerec" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="descriptionrec" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="daterec" Type="datetime" Nullable="false" />
+    <Property Name="CODE_PRODUIT" Type="int" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="statusrec" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rolename" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EmailID" Type="varchar" MaxLength="254" Nullable="false" />
+    <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
+    <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="ResetPasswordCode" Type="nvarchar" MaxLength="100" />
+    <Property Name="datedesactivation" Type="datetime" Nullable="false" />
+    <Property Name="numtelephone" Type="bigint" Nullable="false" />
+    <Property Name="URL_IMAGE_USER" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IMAGE_USER" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="vente">
+    <Key>
+      <PropertyRef Name="idvente" />
+    </Key>
+    <Property Name="idvente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="titre" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="datevente" Type="datetime" Nullable="false" />
+    <Property Name="CODE_PRODUIT" Type="int" Nullable="false" />
+    <Property Name="status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IdUser" Type="int" Nullable="false" />
+    <Property Name="type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_loan_Bank">
+    <End Role="Bank" Type="Self.Bank" Multiplicity="1" />
+    <End Role="loan" Type="Self.loan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="idbank" />
+      </Principal>
+      <Dependent Role="loan">
+        <PropertyRef Name="idbank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_loan_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="loan" Type="Self.loan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="loan">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_louer_Prod">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="louer" Type="Self.louer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="louer">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_louer_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="louer" Type="Self.louer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="louer">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prod_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Prod" Type="Self.Prod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CODE_CATEGORIE" />
+      </Principal>
+      <Dependent Role="Prod">
+        <PropertyRef Name="CODE_CATEGORIE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prod_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Prod" Type="Self.Prod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="Prod">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reclamation_Prod">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="reclamation" Type="Self.reclamation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="reclamation">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reclamation_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="reclamation" Type="Self.reclamation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="reclamation">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vente_Prod1">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="vente" Type="Self.vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="vente">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vente_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="vente" Type="Self.vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="vente">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MyDatabaseModelStoreContainer">
+    <EntitySet Name="Bank" EntityType="Self.Bank" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="loan" EntityType="Self.loan" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="louer" EntityType="Self.louer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Prod" EntityType="Self.Prod" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="reclamation" EntityType="Self.reclamation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vente" EntityType="Self.vente" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_loan_Bank" Association="Self.FK_loan_Bank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="loan" EntitySet="loan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_loan_Users" Association="Self.FK_loan_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="loan" EntitySet="loan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_louer_Prod" Association="Self.FK_louer_Prod">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="louer" EntitySet="louer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_louer_Users" Association="Self.FK_louer_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="louer" EntitySet="louer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prod_Categories" Association="Self.FK_Prod_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Prod" EntitySet="Prod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prod_Users" Association="Self.FK_Prod_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Prod" EntitySet="Prod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reclamation_Prod" Association="Self.FK_reclamation_Prod">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="reclamation" EntitySet="reclamation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reclamation_Users" Association="Self.FK_reclamation_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="reclamation" EntitySet="reclamation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vente_Prod1" Association="Self.FK_vente_Prod1">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="vente" EntitySet="vente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vente_Users" Association="Self.FK_vente_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="vente" EntitySet="vente" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

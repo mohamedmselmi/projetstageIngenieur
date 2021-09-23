@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MyDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Bank">
+    <Key>
+      <PropertyRef Name="idbank" />
+    </Key>
+    <Property Name="idbank" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="namebank" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="interestrate" Type="Single" Nullable="false" />
+    <NavigationProperty Name="loan" Relationship="Self.FK_loan_Bank" FromRole="Bank" ToRole="loan" />
+  </EntityType>
+  <EntityType Name="Categories">
+    <Key>
+      <PropertyRef Name="CODE_CATEGORIE" />
+    </Key>
+    <Property Name="CODE_CATEGORIE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LIBELLE_CATEGORIE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_SAISIE" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Prod" Relationship="Self.FK_Prod_Categories" FromRole="Categories" ToRole="Prod" />
+  </EntityType>
+  <EntityType Name="loan">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="loanamont" Type="Int64" Nullable="false" />
+    <Property Name="loanterme" Type="Int64" Nullable="false" />
+    <Property Name="monthlyincome" Type="Int64" Nullable="false" />
+    <Property Name="idbank" Type="Int32" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Bank" Relationship="Self.FK_loan_Bank" FromRole="loan" ToRole="Bank" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_loan_Users" FromRole="loan" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="louer">
+    <Key>
+      <PropertyRef Name="idlouer" />
+    </Key>
+    <Property Name="idlouer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="titre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="datedebut" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="datefin" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CODE_PRODUIT" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Prod" Relationship="Self.FK_louer_Prod" FromRole="louer" ToRole="Prod" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_louer_Users" FromRole="louer" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Prod">
+    <Key>
+      <PropertyRef Name="CODE_PRODUIT" />
+    </Key>
+    <Property Name="CODE_PRODUIT" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CODE_CATEGORIE" Type="Int32" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="LIBELLE_PRODUIT" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DESCRIPTION_PRODUIT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IMAGE_PRODUIT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="URL_IMAGE_PRODUIT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DATE_SAISIE" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Prix" Type="Double" />
+    <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="remise" Type="Int32" Nullable="false" />
+    <Property Name="vu" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="datedebut" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="datefin" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Categories" Relationship="Self.FK_Prod_Categories" FromRole="Prod" ToRole="Categories" />
+    <NavigationProperty Name="louer" Relationship="Self.FK_louer_Prod" FromRole="Prod" ToRole="louer" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Prod_Users" FromRole="Prod" ToRole="Users" />
+    <NavigationProperty Name="reclamation" Relationship="Self.FK_reclamation_Prod" FromRole="Prod" ToRole="reclamation" />
+    <NavigationProperty Name="vente" Relationship="Self.FK_vente_Prod1" FromRole="Prod" ToRole="vente" />
+  </EntityType>
+  <EntityType Name="reclamation">
+    <Key>
+      <PropertyRef Name="idrec" />
+    </Key>
+    <Property Name="idrec" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="titrerec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="descriptionrec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="daterec" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CODE_PRODUIT" Type="Int32" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="statusrec" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Prod" Relationship="Self.FK_reclamation_Prod" FromRole="reclamation" ToRole="Prod" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_reclamation_Users" FromRole="reclamation" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Rolename" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="IdUser" />
+    </Key>
+    <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EmailID" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+    <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="ResetPasswordCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="datedesactivation" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="numtelephone" Type="Int64" Nullable="false" />
+    <Property Name="URL_IMAGE_USER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IMAGE_USER" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="loan" Relationship="Self.FK_loan_Users" FromRole="Users" ToRole="loan" />
+    <NavigationProperty Name="louer" Relationship="Self.FK_louer_Users" FromRole="Users" ToRole="louer" />
+    <NavigationProperty Name="Prod" Relationship="Self.FK_Prod_Users" FromRole="Users" ToRole="Prod" />
+    <NavigationProperty Name="reclamation" Relationship="Self.FK_reclamation_Users" FromRole="Users" ToRole="reclamation" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="vente" Relationship="Self.FK_vente_Users" FromRole="Users" ToRole="vente" />
+  </EntityType>
+  <EntityType Name="vente">
+    <Key>
+      <PropertyRef Name="idvente" />
+    </Key>
+    <Property Name="idvente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="titre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="datevente" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CODE_PRODUIT" Type="Int32" Nullable="false" />
+    <Property Name="status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="type" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Prod" Relationship="Self.FK_vente_Prod1" FromRole="vente" ToRole="Prod" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_vente_Users" FromRole="vente" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_loan_Bank">
+    <End Role="Bank" Type="Self.Bank" Multiplicity="1" />
+    <End Role="loan" Type="Self.loan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Bank">
+        <PropertyRef Name="idbank" />
+      </Principal>
+      <Dependent Role="loan">
+        <PropertyRef Name="idbank" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prod_Categories">
+    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+    <End Role="Prod" Type="Self.Prod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="CODE_CATEGORIE" />
+      </Principal>
+      <Dependent Role="Prod">
+        <PropertyRef Name="CODE_CATEGORIE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_loan_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="loan" Type="Self.loan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="loan">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_louer_Prod">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="louer" Type="Self.louer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="louer">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_louer_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="louer" Type="Self.louer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="louer">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Prod_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Prod" Type="Self.Prod" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="Prod">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reclamation_Prod">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="reclamation" Type="Self.reclamation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="reclamation">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vente_Prod1">
+    <End Role="Prod" Type="Self.Prod" Multiplicity="1" />
+    <End Role="vente" Type="Self.vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Prod">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Principal>
+      <Dependent Role="vente">
+        <PropertyRef Name="CODE_PRODUIT" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_reclamation_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="reclamation" Type="Self.reclamation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="reclamation">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vente_Users">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="vente" Type="Self.vente" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="IdUser" />
+      </Principal>
+      <Dependent Role="vente">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MyDatabaseEntities24" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Bank" EntityType="Self.Bank" />
+    <EntitySet Name="Categories" EntityType="Self.Categories" />
+    <EntitySet Name="loan" EntityType="Self.loan" />
+    <EntitySet Name="louer" EntityType="Self.louer" />
+    <EntitySet Name="Prod" EntityType="Self.Prod" />
+    <EntitySet Name="reclamation" EntityType="Self.reclamation" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="vente" EntityType="Self.vente" />
+    <AssociationSet Name="FK_loan_Bank" Association="Self.FK_loan_Bank">
+      <End Role="Bank" EntitySet="Bank" />
+      <End Role="loan" EntitySet="loan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prod_Categories" Association="Self.FK_Prod_Categories">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="Prod" EntitySet="Prod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_loan_Users" Association="Self.FK_loan_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="loan" EntitySet="loan" />
+    </AssociationSet>
+    <AssociationSet Name="FK_louer_Prod" Association="Self.FK_louer_Prod">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="louer" EntitySet="louer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_louer_Users" Association="Self.FK_louer_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="louer" EntitySet="louer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Prod_Users" Association="Self.FK_Prod_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Prod" EntitySet="Prod" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reclamation_Prod" Association="Self.FK_reclamation_Prod">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="reclamation" EntitySet="reclamation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vente_Prod1" Association="Self.FK_vente_Prod1">
+      <End Role="Prod" EntitySet="Prod" />
+      <End Role="vente" EntitySet="vente" />
+    </AssociationSet>
+    <AssociationSet Name="FK_reclamation_Users" Association="Self.FK_reclamation_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="reclamation" EntitySet="reclamation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vente_Users" Association="Self.FK_vente_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="vente" EntitySet="vente" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

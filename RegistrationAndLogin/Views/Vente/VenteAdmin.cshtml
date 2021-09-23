@@ -1,0 +1,122 @@
+﻿@model RegistrationAndLogin.Models.vente
+@{
+    ViewBag.Title = "VenteAdmin";
+
+}
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+<center>
+    <div class="card" style="width:700px">
+
+        <div class="card-header">
+            <h3 class="card-title">Acheter un Produit</h3>
+        </div>
+        <!-- /.card-header -->
+        @using (Html.BeginForm("AddVenteAdmin", "Vente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body" style="margin-left:60px">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                @if (Model != null)
+                                {
+                                    <input type="hidden" name="idvente" id="idvente" value="@Model.idvente" />
+                                }
+                                <label>Produit</label>
+                                <select id="CODE_PRODUIT" name="CODE_PRODUIT" class="form-control">
+
+
+                                    @using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                                    {
+                                        var v = dc.Users.Where(a => a.EmailID == @User.Identity.Name.ToString()).FirstOrDefault();
+                                        //    var v1 = dc.vente.Where(a => a.Prod.== @User.Identity.Name.ToString()).FirstOrDefault();
+                                        foreach (var data in dc.Prod.ToList())
+                                        {
+                                            if (data.IdUser != v.IdUser && data.type == "vendre" && data.status != "resolu" && dc.vente.Where(a => a.Prod.LIBELLE_PRODUIT == data.LIBELLE_PRODUIT).FirstOrDefault() == null)
+                                            {
+                                                <option value="@data.CODE_PRODUIT"> @data.LIBELLE_PRODUIT </option>
+                                            }
+                                        }
+
+                                    }
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="form-group">
+
+                                <label>titre</label>
+                                @Html.ValidationMessageFor(x => x.titre, "", new { @class = "error" })
+                                @Html.TextBoxFor(x => x.titre, new { @class = "form-control" })
+
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>type</label>
+                                    <select id="type" name="type" class="form-control">
+
+                                        <option value="vente de main en main">vendre de main en main </option>
+                                        <option value="vente en ligne">vente en ligne </option>
+
+
+                                    </select>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>DESCRIPTION</label>
+                                @Html.ValidationMessageFor(x => x.description, "", new { @class = "error" })
+                                @Html.TextAreaFor(x => x.description, new { @class = "form-control", style = "heigth:400px;" })
+
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn btn-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+
+        </div>
+    </div>
+
+</center>
+

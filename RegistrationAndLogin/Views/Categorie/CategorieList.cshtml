@@ -1,0 +1,80 @@
+﻿@model  List<RegistrationAndLogin.Models.Categories>
+@{
+    ViewBag.Title = "CategorieList";
+    
+}
+
+<div class="card">
+<div class="card-header">
+    <h3 class="card-title">affiche Categories</h3>
+</div>
+<!-- /.card-header -->
+<div class="card-body">
+
+
+    <table id="categories" style="width:900px;height:300px" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+        <thead>
+            <tr>
+                
+                <th>Categorie</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+
+            <tr>
+               
+                <td>@item.LIBELLE_CATEGORIE</td>
+                <td>@item.DATE_SAISIE</td>
+                <td>
+                    <a href="@Url.Action("Categorie", new { item.CODE_CATEGORIE, item.LIBELLE_CATEGORIE })"><i class="btn btn-success">Edit</i></a>
+
+                    <a href="#myModal-@item.CODE_CATEGORIE" class="trigger-btn" data-toggle="modal"><i class="btn btn-danger">Delete</i></a>
+
+            </tr>
+                <div id="myModal-@item.CODE_CATEGORIE" class="modal hide fade">
+                    <div class="modal-dialog modal-confirm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+
+                                <h4 class="modal-title w-100">
+                                    Suppression
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-center">Voulez vous supprimer ?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="@Url.Action("Delete", new { item.CODE_CATEGORIE })">
+                                    <i class="btn btn-success">Yes</i>
+                                </a>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            }
+        </tbody>
+
+    </table>
+    @section scripts
+{
+        <script>
+
+                $(document).ready(function () {
+                    $("#categories").DataTable()
+                })
+        </script>
+
+    }
+    <!-- /.card-body -->
+</div>
+
+

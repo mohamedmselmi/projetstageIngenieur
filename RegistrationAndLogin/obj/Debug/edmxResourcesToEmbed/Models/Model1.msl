@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MyDatabaseModelStoreContainer" CdmEntityContainer="MyDatabaseEntities24">
+    <EntitySetMapping Name="Bank">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Bank">
+        <MappingFragment StoreEntitySet="Bank">
+          <ScalarProperty Name="idbank" ColumnName="idbank" />
+          <ScalarProperty Name="namebank" ColumnName="namebank" />
+          <ScalarProperty Name="interestrate" ColumnName="interestrate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Categories">
+        <MappingFragment StoreEntitySet="Categories">
+          <ScalarProperty Name="CODE_CATEGORIE" ColumnName="CODE_CATEGORIE" />
+          <ScalarProperty Name="LIBELLE_CATEGORIE" ColumnName="LIBELLE_CATEGORIE" />
+          <ScalarProperty Name="DATE_SAISIE" ColumnName="DATE_SAISIE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="loan">
+      <EntityTypeMapping TypeName="MyDatabaseModel.loan">
+        <MappingFragment StoreEntitySet="loan">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="loanamont" ColumnName="loanamont" />
+          <ScalarProperty Name="loanterme" ColumnName="loanterme" />
+          <ScalarProperty Name="monthlyincome" ColumnName="monthlyincome" />
+          <ScalarProperty Name="idbank" ColumnName="idbank" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="louer">
+      <EntityTypeMapping TypeName="MyDatabaseModel.louer">
+        <MappingFragment StoreEntitySet="louer">
+          <ScalarProperty Name="idlouer" ColumnName="idlouer" />
+          <ScalarProperty Name="titre" ColumnName="titre" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="datedebut" ColumnName="datedebut" />
+          <ScalarProperty Name="datefin" ColumnName="datefin" />
+          <ScalarProperty Name="CODE_PRODUIT" ColumnName="CODE_PRODUIT" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Prod">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Prod">
+        <MappingFragment StoreEntitySet="Prod">
+          <ScalarProperty Name="CODE_PRODUIT" ColumnName="CODE_PRODUIT" />
+          <ScalarProperty Name="CODE_CATEGORIE" ColumnName="CODE_CATEGORIE" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="LIBELLE_PRODUIT" ColumnName="LIBELLE_PRODUIT" />
+          <ScalarProperty Name="DESCRIPTION_PRODUIT" ColumnName="DESCRIPTION_PRODUIT" />
+          <ScalarProperty Name="IMAGE_PRODUIT" ColumnName="IMAGE_PRODUIT" />
+          <ScalarProperty Name="URL_IMAGE_PRODUIT" ColumnName="URL_IMAGE_PRODUIT" />
+          <ScalarProperty Name="DATE_SAISIE" ColumnName="DATE_SAISIE" />
+          <ScalarProperty Name="Prix" ColumnName="Prix" />
+          <ScalarProperty Name="type" ColumnName="type" />
+          <ScalarProperty Name="remise" ColumnName="remise" />
+          <ScalarProperty Name="vu" ColumnName="vu" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="datedebut" ColumnName="datedebut" />
+          <ScalarProperty Name="datefin" ColumnName="datefin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="reclamation">
+      <EntityTypeMapping TypeName="MyDatabaseModel.reclamation">
+        <MappingFragment StoreEntitySet="reclamation">
+          <ScalarProperty Name="idrec" ColumnName="idrec" />
+          <ScalarProperty Name="titrerec" ColumnName="titrerec" />
+          <ScalarProperty Name="descriptionrec" ColumnName="descriptionrec" />
+          <ScalarProperty Name="daterec" ColumnName="daterec" />
+          <ScalarProperty Name="CODE_PRODUIT" ColumnName="CODE_PRODUIT" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="statusrec" ColumnName="statusrec" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="Rolename" ColumnName="Rolename" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="MyDatabaseModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
+          <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="ResetPasswordCode" ColumnName="ResetPasswordCode" />
+          <ScalarProperty Name="datedesactivation" ColumnName="datedesactivation" />
+          <ScalarProperty Name="numtelephone" ColumnName="numtelephone" />
+          <ScalarProperty Name="URL_IMAGE_USER" ColumnName="URL_IMAGE_USER" />
+          <ScalarProperty Name="IMAGE_USER" ColumnName="IMAGE_USER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vente">
+      <EntityTypeMapping TypeName="MyDatabaseModel.vente">
+        <MappingFragment StoreEntitySet="vente">
+          <ScalarProperty Name="idvente" ColumnName="idvente" />
+          <ScalarProperty Name="titre" ColumnName="titre" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="datevente" ColumnName="datevente" />
+          <ScalarProperty Name="CODE_PRODUIT" ColumnName="CODE_PRODUIT" />
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

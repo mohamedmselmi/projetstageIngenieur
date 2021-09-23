@@ -1,0 +1,200 @@
+﻿@model  List<RegistrationAndLogin.Models.loan>
+
+@{
+    ViewBag.Title = "LoanList";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+    MyDatabaseEntities24 dc = new MyDatabaseEntities24();
+}
+@using RegistrationAndLogin.Models;
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">affiche des résultats des simulations</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+        <table id="banks" style="width:900px;height:300px" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+            <thead>
+                <tr>
+
+                    <th>Bank</th>
+                    <th>montant du prét</th>
+                    <td>periode de prés</td>
+                    <td>remboursement/total </td>
+                    <td>remboursement/mois </td>
+                    <td>remboursement Max/mois </td>
+                    <td>resultat </td>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in dc.loan.ToList())
+                {
+                    if (item.IdUser == dc.Users.Where(a => a.EmailID == User.Identity.Name).FirstOrDefault().IdUser)
+                    {
+                        var s = @item.loanamont + ((@item.Bank.interestrate / 100) * @item.loanamont);
+                        var l = @item.loanterme * 12;
+                        var k = (s / l);
+                        var t = item.monthlyincome * 0.4;
+
+                        <tr>
+
+                            <td>@item.Bank.namebank</td>
+                            <td>@item.loanamont</td>
+                            <td>@item.loanterme</td>
+                            <td>@s</td>
+                            <td>@k</td>
+                            <td>@t</td>
+                            <td>
+                                @if (@t >= @k)
+                                {
+                                    <span class="badge badge-success">successs</span>
+                                }
+
+                                else
+                                {
+
+                                    <span class="badge badge-danger">failure</span>
+                                }
+
+                            </td>
+                            <td>
+
+                                <a href="@Url.Action("Loan", new { item.id,item.loanamont,item.loanterme,item.monthlyincome,item.idbank })"> <i class="fa fa-edit"></i></a>
+                               
+                                <a href="#myModal-@item.id" class="trigger-btn" data-toggle="modal"><i class="fa fa-trash"></i></a>
+                            
+                                @if (@t < @k)
+                                {
+                                    <a href="#Conseil-@item.id" class="trigger-btn" data-toggle="modal"><i class="fa fa-folder"></i></a>
+                                }
+
+</tr>
+
+                        <div id="myModal-@item.id" class="modal hide fade">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title w-100">
+                                            Suppression
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+
+
+                                        <p class="text-center">
+                                        
+                                        Voulez vous supprimer ?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="@Url.Action("Delete", new { item.id })">
+                                            <i class="btn btn-success">Yes</i>
+                                        </a>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="Conseil-@item.id" class="modal hide fade">
+                            <div class="modal-dialog modal-confirm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        <h4 class="modal-title w-100">
+                                            Conseil
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @if (dc.loan.Where(a => a.id == @item.id).FirstOrDefault().loanterme == 5)
+                                        {
+                                            var p = s / (10 * 12);
+                                            var pp = s / (20 * 12);
+
+                                            if (p <= t)
+                                            {<p class="text-center">
+
+                                                    essayer de rembourser pour une periode de 10 ans
+                                                </p>
+                                            }
+                                            else if (pp <= t)
+                                            { <p class="text-center">
+
+                                                    essayer de rembourser pour une periode de 20 ans
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-center">
+                                                    essayer de minimiser le taux du prét
+                                                </p>
+                                            }
+
+                                        }
+
+
+                                        @if (dc.loan.Where(a => a.id == @item.id).FirstOrDefault().loanterme == 10)
+                                        {
+
+                                            var ps = s / (20 * 12);
+
+
+                                            if (ps <= t)
+                                            {<p class="text-center">
+
+                                                    essayer de rembourser pour une periode de 20 ans
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-center">
+                                                    essayer de minimiser le taux du prét
+                                                </p>
+                                            }
+
+                                        }
+
+
+                                        @if (dc.loan.Where(a => a.id == @item.id).FirstOrDefault().loanterme == 20)
+                                        {
+
+                                            
+                                                <p class="text-center">
+                                                    essayer de minimiser le taux du prét
+                                                </p>
+                                            
+
+                                        }
+
+                                    </div>
+                                    <div class="modal-footer">
+                                       
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    }
+                }
+            </tbody>
+
+        </table>
+        @section scripts
+{
+            <script>
+
+                $(document).ready(function () {
+                    $("#banks").DataTable()
+                })
+            </script>
+
+        }
+        <!-- /.card-body -->
+    </div>
+

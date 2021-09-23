@@ -1,0 +1,563 @@
+﻿@model List<RegistrationAndLogin.Models.vente>
+@{
+    ViewBag.Title = "VenteList";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+@using RegistrationAndLogin.Models;
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">affiche des ventes</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+
+
+        <table id="roles" style="width:900px;height:300px" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+            <thead>
+                <tr>
+                    <th> id vente</th>
+                    <th> Nom PRODUIT</th>
+                    <th>titre</th>
+                    <th>date vente</th>
+                    <th>Prix</th>
+                    <th>status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                    {
+                        var v = dc.Users.Where(a => a.EmailID == @User.Identity.Name.ToString()).FirstOrDefault();
+                        if (item.IdUser ==v.IdUser || item.Prod.IdUser==v.IdUser)
+                        {
+                            <tr>
+                                <td>
+                                    @if (Model != null)
+                                    {
+                                        @item.idvente
+                                    }
+                                </td>
+                                <td>@item.Prod.LIBELLE_PRODUIT</td>
+                                <td>@item.titre</td>
+                                <td>
+                                    @item.datevente
+                                </td>
+                                <td>@item.Prod.Prix</td>
+
+                                <td>
+                                    @item.status
+                                    @if (item.Prod.IdUser == v.IdUser)
+                                    {
+                                        <p>vendeur</p>
+                                    }
+                                    else if (item.IdUser == v.IdUser)
+                                    {
+                                        <p>acheteur</p>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="#affiche-@item.idvente" class="trigger-btn" data-toggle="modal"><i class="nav-icon fas fa-copy"></i></a>
+                                    <a href="#myModal-@item.Prod.CODE_PRODUIT" class="trigger-btn" data-toggle="modal"><i class="fa fa-envelope-open-text"></i></a>
+
+                                    <a href="https://localhost:44311/Contact/Contact"><i class="fas fa-comment-dots"></i></a>
+
+                                    <a href="#delete-@item.idvente" class="trigger-btn" data-toggle="modal"><i class="fa fa-trash"></i></a>
+
+
+
+
+
+                                    @if (item.Prod.IdUser == v.IdUser)
+                                    {<a href="@Url.Action("ValidVente", new { item.idvente})">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </a>}
+                                    else
+                                    {
+
+                                    }
+
+                                    @if (item.Prod.IdUser == v.IdUser)
+                                    {<a href="@Url.Action("RefuseVente", new { item.idvente})">
+                                            <i class="fas fa-thumbs-down"></i>
+                                        </a>}
+                                    else
+                                    {
+
+                                    }
+                                    <div id="myModal-@item.Prod.CODE_PRODUIT" class="modal hide fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+
+                                                    <h4 class="modal-title w-100">
+                                                        historique de communication
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body" style="color:darkred">
+                                                    @using (MyDatabaseEntities24 dc1 = new MyDatabaseEntities24())
+                                                    {
+                                                        var q = dc.Users.Where(a => a.EmailID == @User.Identity.Name.ToString()).FirstOrDefault();
+                                                        var s = dc1.Users.Where(a => a.EmailID == User.Identity.Name).FirstOrDefault();
+
+                                                        foreach (var item1 in dc1.reclamation.ToList().Where(x => x.CODE_PRODUIT == @item.Prod.CODE_PRODUIT))
+                                                        {
+                                                            <div class="media">
+                                                                <div class="media-left">
+                                                                    <a href="#" style="margin-top:2px">
+
+
+                                                                        @if (@item1.titrerec == "message" && @item1.CODE_PRODUIT == @item.CODE_PRODUIT && (item.IdUser == s.IdUser || item.Prod.IdUser == s.IdUser))
+                                                                        {
+
+
+                                                                            <img src="@Url.Content("~/Fichier/" + dc1.Users.Where(a => a.IdUser == @item1.IdUser).FirstOrDefault().IMAGE_USER)" width="150" height="150" />
+                                                                        }
+
+
+
+
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body message">
+                                                                    <div class="panel panel-default">
+                                                                        <div class="panel-heading panel-heading-white">
+                                                                            <div class="pull-right">
+                                                                                <small class="text-muted">
+                                                                                    @if (@item1.titrerec == "message" && @item1.CODE_PRODUIT == @item.CODE_PRODUIT && (item.IdUser == s.IdUser || item.Prod.IdUser == s.IdUser))
+                                                                                    {@item1.daterec.ToString("yyyy-MM-dd")}
+
+
+                                                                                </small>
+                                                                            </div>
+                                                                            <a href="#">
+                                                                                @if (@item1.titrerec == "message" && @item1.CODE_PRODUIT == @item.CODE_PRODUIT && (item.IdUser == s.IdUser || item.Prod.IdUser == s.IdUser))
+                                                                                {
+                                                                                    var k = dc1.Users.Where(a => a.IdUser == @item1.IdUser).FirstOrDefault();
+
+                                                                                    @item1.Users.FirstName @item1.Users.LastName
+                                                                                    if (item1.Users.Roles.Rolename == "Admin")
+                                                                                    {
+                                                                                        <span class="badge badge-success">Admin</span>
+                                                                                    }
+                                                                                    else { }
+                                                                                }
+
+
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="panel-body">
+                                                                            @if (@item1.titrerec == "message" && @item1.CODE_PRODUIT == @item.CODE_PRODUIT && (item.IdUser == s.IdUser || item.Prod.IdUser == s.IdUser))
+                                                                            {
+                                                                                @item1.descriptionrec
+                                                                            }
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br /><br />
+                                                        }
+                                                        <br /><br />
+                                                    }
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="@Url.Action("ValidVente", new { item.idvente})">
+                                                        <i class="btn btn-success">Yes</i>
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="delete-@item.idvente" class="modal hide fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+
+                                                    <h4 class="modal-title w-100">
+                                                        Suppression
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+
+
+                                                    <p class="text-center">
+
+                                                        Voulez vous supprimer ?
+                                                    </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="@Url.Action("Delete", new { item.idvente })">
+                                                        <i class="btn btn-success">Yes</i>
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="affiche-@item.idvente" class="modal hide fade">
+                                        <div class="modal-dialog modal-confirm">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+
+                                                    <h4 class="modal-title w-100">
+                                                        Détails
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+
+                                                    <div class="card mb-3" style="max-width: 540px;">
+                                                        <div class="row no-gutters">
+
+                                                            <div class="col-md-12">
+                                                                <div class="card-body">
+                                                                    <div class="card mb-3">
+                                                                        <div class="card-body">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3">
+                                                                                    <h6 class="mb-0">titre</h6>
+                                                                                </div>
+                                                                                <div class="col-sm-9 text-secondary">
+                                                                                    @item.titre
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3">
+                                                                                    <h6 class="mb-0">description</h6>
+                                                                                </div>
+                                                                                <div class="col-sm-9 text-secondary">
+                                                                                    @item.description
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+                                                                            <div class="row">
+                                                                                <div class="col-sm-3">
+                                                                                    <h6 class="mb-0">date vente</h6>
+                                                                                </div>
+                                                                                <div class="col-sm-9 text-secondary">
+                                                                                    @item.datevente
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr>
+
+
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="modal-footer">
+
+
+                                                    <button type="button" class="btn btn-success" data-dismiss="modal">ok</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </td>
+                            </tr>
+
+                        }
+
+                        else
+                        {
+
+                        }
+
+                    }
+
+                }
+            </tbody>
+
+        </table>
+        @section scripts
+{
+            <script>
+
+                $(document).ready(function () {
+                    $("#roles").DataTable()
+                })
+            </script>
+
+        }
+        <!-- /.card-body -->
+    </div>
+
+    <style>
+        .messages-container .messages-list {
+  width: 250px;
+}
+.messages-container .messages-list .list-group-item {
+  padding: 0;
+}
+.messages-container .messages-list .list-group-item a {
+  color: #212121;
+  display: block;
+  text-decoration: none;
+}
+.messages-container .messages-list .list-group-item:hover {
+  background: #f9f9f9;
+}
+.messages-container .messages-list .list-group-item.active:hover {
+  background: #26a69a;
+}
+.messages-container .messages-list .list-group-item .media-body {
+  padding: 5px;
+}
+.messages-container .messages-list .list-group-item .media-body .user {
+  font-weight: 500;
+}
+.messages-container .messages-list .list-group-item .media-body .date {
+  float: right;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 0.4;
+}
+.messages-container .messages-list .list-group-item .media-body .message {
+  opacity: 0.8;
+}
+.messages-container .messages-list .list-group-item.active .media-body {
+  color: #fff;
+}
+.messages-container .media-body {
+  height: 100%;
+}
+.messages-container .media-body .text-muted {
+  color: #a1a1a1;
+}
+.messages-container .media-body .media {
+  margin-top: 0;
+}
+media (max-width: 480px) {
+  .messages-container .messages-list {
+    width: 100%;
+    height: 50px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .messages-container .messages-list .panel.panel-default {
+    position: relative;
+    overflow-x: auto;
+    background: none;
+    border: 0;
+    height: 50px;
+  }
+  .messages-container .messages-list .panel.panel-default ul {
+    height: 50px;
+  }
+  .messages-container .messages-list .list-group-item {
+    width: 50px;
+    border: 0;
+    float: left;
+  }
+  .messages-container .messages-list .list-group-item .media-left {
+    padding: 0;
+  }
+  .messages-container .messages-list .list-group-item .media-body {
+    display: none;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    opacity: 0.6;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left:hover {
+    opacity: 1;
+  }
+  .messages-container .messages-list .list-group-item.active {
+    opacity: 1;
+  }
+}
+media (min-width: 480px) and (max-width: 1080px) {
+  .messages-container .messages-list {
+    width: auto;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    padding: 0;
+  }
+  .messages-container .messages-list .list-group-item .media .media-body {
+    display: none;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left {
+    opacity: 0.6;
+  }
+  .messages-container .messages-list .list-group-item .media .media-left:hover {
+    opacity: 1;
+  }
+  .messages-container .messages-list .list-group-item.active .media .media-left {
+    opacity: 1;
+  }
+}
+
+
+.media-heading {
+  margin-bottom: 10px;
+}
+.media-heading > a {
+  color: #212121;
+}
+.media-heading > a:hover {
+  text-decoration: none;
+}
+.media-right,
+.media > .pull-right {
+  padding-left: 10px;
+}
+.media-left,
+.media > .pull-left {
+  padding-right: 10px;
+}
+.media-grid > .pull-left {
+  margin-right: 15px;
+}
+.media-grid > .pull-right {
+  margin-left: 15px;
+}
+.media-grid > .media-left {
+  padding-right: 15px;
+}
+.media-grid > .media-right {
+  padding-left: 15px;
+}
+media (max-width: 480px) {
+  .media-clearfix-xs-min > .pull-left,
+  .media-clearfix-xs-min > .pull-right,
+  .media-clearfix-xs-min > .media-left,
+  .media-clearfix-xs-min > .media-right {
+    float: none !important;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  .media-clearfix-xs-min > [class*="media"] .media-object {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .media-clearfix-xs-min > .media-body {
+    width: auto;
+    display: block;
+  }
+  .media-clearfix-xs-min > .media-left,
+  .media-clearfix-xs-min > .pull-left {
+    text-align: center;
+  }
+  .media-clearfix-xs-min > .media-right {
+    margin-bottom: 0;
+    margin-top: 15px;
+  }
+}
+media (max-width: 767px) {
+  .media-clearfix-xs > .pull-left,
+  .media-clearfix-xs > .pull-right,
+  .media-clearfix-xs > .media-left,
+  .media-clearfix-xs > .media-right {
+    float: none !important;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  .media-clearfix-xs > [class*="media"] .media-object {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .media-clearfix-xs > .media-body {
+    width: auto;
+    display: block;
+  }
+  .media-clearfix-xs > .media-left,
+  .media-clearfix-xs > .pull-left {
+    text-align: center;
+  }
+  .media-clearfix-xs > .media-right {
+    margin-bottom: 0;
+    margin-top: 15px;
+  }
+}
+media (min-width: 768px) and (max-width: 991px) {
+  .media-clearfix-sm > .pull-left,
+  .media-clearfix-sm > .pull-right,
+  .media-clearfix-sm > .media-left,
+  .media-clearfix-sm > .media-right {
+    float: none !important;
+    margin-bottom: 15px;
+    margin-left: 0;
+    margin-right: 0;
+    display: block;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  .media-clearfix-sm > [class*="media"] .media-object {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .media-clearfix-sm > .media-body {
+    width: auto;
+    display: block;
+  }
+  .media-clearfix-sm > .media-left,
+  .media-clearfix-sm > .pull-left {
+    text-align: center;
+  }
+  .media-clearfix-sm > .media-right {
+    margin-bottom: 0;
+    margin-top: 15px;
+  }
+}
+.media.v-middle .media-left,
+.media.v-middle .media-right,
+.media.v-middle .media-body {
+  vertical-align: middle;
+}
+.media.v-middle .media-body > *:first-child {
+  margin-top: 0;
+}
+.media.list-group-item {
+  margin-top: 0;
+}
+.media-padding.media-left {
+  padding-left: 10px;
+}
+.media-padding.media-right {
+  padding-right: 10px;
+}
+.media-body > *:last-child {
+  margin-bottom: 0;
+}
+.media.media-overflow-visible {
+  overflow: visible;
+}
+.media.media-overflow-visible > .media-body,
+.media.media-overflow-visible > .media-left,
+.media.media-overflow-visible > .media-right {
+  overflow: visible;
+}
+
+.panel-default > .panel-heading {
+    color: #333333;
+    background-color: #ffffff;
+    border-color: #e2e9e6;
+}
+    </style>

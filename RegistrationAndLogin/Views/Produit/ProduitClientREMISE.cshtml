@@ -1,0 +1,101 @@
+﻿@model RegistrationAndLogin.Models.Prod
+@{
+    ViewBag.Title = "ProduitClientREMISE";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">Remise</h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddRemiseProduitClient", "Produit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+<div class="card-body">
+    <div class="container">
+        <div class="row" type="hidden">
+            <div class="col-xs-12 col-sm-6" type="hidden">
+                <div class="form-group" style="color:blanchedalmond" type="hidden">
+                    @if (Model != null)
+                    {
+                        <input type="hidden" name="CODE_PRODUIT" id="CODE_PRODUIT" value="@Model.CODE_PRODUIT" />
+                    }
+
+                    <select style="display:none" style="color:blanchedalmond" id="CODE_CATEGORIE" name="CODE_CATEGORIE" class="form-control">
+
+
+                        @using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                        {
+                            foreach (var data in dc.Categories.ToList())
+                            {
+                                <option type="hidden" style="display:none" value="@data.CODE_CATEGORIE"> @data.LIBELLE_CATEGORIE </option>
+                            }
+
+                        }
+
+                    </select>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label>remise</label>
+                    @Html.ValidationMessageFor(x => x.remise, "", new { @class = "error" })
+                    @Html.TextBoxFor(x => x.remise, new { @class = "form-control" })
+                </div>
+            </div>
+            <br />
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label>date debut</label>
+                    @Html.EditorFor(x => x.datedebut, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.datedebut, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="form-group">
+                    <label>date fin</label>
+                    @Html.EditorFor(x => x.datefin, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(x => x.datefin, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            
+        </div>
+
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-danger">Cancel</button>
+        </div>
+
+
+    </div>
+            
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+
+            </div>
+        </div>
+
+    }

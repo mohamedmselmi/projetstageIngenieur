@@ -1,0 +1,53 @@
+﻿@model RegistrationAndLogin.Models.Users
+@{
+    ViewBag.Title = "modifImageProfilAdmin";
+
+}
+
+@using RegistrationAndLogin.Models;
+@using (Html.BeginForm("modifphotoAdmin", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Edit profil</h3>
+        </div>
+        <div class="card-body">
+
+            <div class="container">
+
+
+                @if (Model != null)
+                {
+                    <input type="hidden" name="IdUser" id="IdUser" value="@Model.IdUser" />
+                }
+
+
+
+                <div type="hidden" class="row">
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="input-group">
+
+                            @Html.EditorFor(model => model.URL_IMAGE_USER, new { htmlAttributes = new { @class = "form-control", @type = "file" } })
+                            @Html.ValidationMessageFor(model => model.URL_IMAGE_USER, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+}
+

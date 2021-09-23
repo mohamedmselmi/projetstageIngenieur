@@ -1,0 +1,96 @@
+﻿@model RegistrationAndLogin.Models.reclamation
+@{
+    ViewBag.Title = "ContactLouer";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+<center>
+    <div class="card" style="width:700px">
+
+        <div class="card-header">
+            <h3 class="card-title">Ajout Produit</h3>
+        </div>
+        <!-- /.card-header -->
+        @using (Html.BeginForm("AddContactLouer", "Contact", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body" style="margin-left:60px">
+
+                <div class="container">
+
+
+                    <div class="row">
+
+                        <div class="form-group" style="width:900px;" row="3" col="3">
+
+                            <label>Produit</label>
+                            <select id="CODE_PRODUIT" name="CODE_PRODUIT" class="form-control">
+
+
+                                @using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                                {
+                                    var v = dc.Users.Where(a => a.EmailID == @User.Identity.Name.ToString()).FirstOrDefault();
+
+                                    foreach (var data in dc.Prod.ToList())
+                                    {
+                                        var v1 = dc.louer.Where(a => a.CODE_PRODUIT == data.CODE_PRODUIT).FirstOrDefault();
+                                        if (v1 != null && data.type == "Rent" && (data.IdUser == v.IdUser || v1.IdUser == v.IdUser))
+                                        {
+                                            <option value="@data.CODE_PRODUIT"> @data.LIBELLE_PRODUIT </option>
+                                        }
+                                    }
+
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="form-group" style="width:900px;" row="3" col="3">
+
+                            <label>description</label>
+                            @Html.ValidationMessageFor(x => x.descriptionrec, "", new { @class = "error" })
+                            @Html.TextAreaFor(x => x.descriptionrec, new { @class = "form-control" })
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="reset" class="btn btn-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </div>
+        }
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+
+        </div>
+    </div>
+
+</center>
+
+

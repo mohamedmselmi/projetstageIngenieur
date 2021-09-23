@@ -1,0 +1,93 @@
+﻿@model RegistrationAndLogin.Models.loan
+@{
+    ViewBag.Title = "Loan";
+    Layout = "~/Views/Shared/_dashboard.cshtml";
+}
+
+@using RegistrationAndLogin.Models;
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong> @ViewBag.Message
+    </div>
+}
+
+<div class="card">
+
+    <div class="card-header">
+        <h3 class="card-title">simuler ton crédit </h3>
+    </div>
+    <!-- /.card-header -->
+    @using (Html.BeginForm("AddLoan", "Loan", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group">
+                            @if (Model != null)
+                            {
+                                <input type="hidden" name="id" id="id" value="@Model.id" />
+                            }
+                            <label>Bank</label>
+                            <select id="idbank" name="idbank" class="form-control">
+
+
+                                @using (MyDatabaseEntities24 dc = new MyDatabaseEntities24())
+                                {
+                                    foreach (var data in dc.Bank.ToList())
+                                    {
+                                        <option value="@data.idbank"> @data.namebank </option>
+                                    }
+
+                                }
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>montant de prét</label>
+                            @Html.ValidationMessageFor(x => x.loanamont, "", new { @class = "error" })
+                            @Html.TextBoxFor(x => x.loanamont, new { @class = "form-control" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-6" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>salaire</label>
+                            @Html.ValidationMessageFor(x => x.monthlyincome, "", new { @class = "error" })
+                            @Html.TextBoxFor(x => x.monthlyincome, new { @class = "form-control" })
+
+                        </div>
+
+                        <div class="form-group">
+                            <label>periode de remboursement</label>
+                            <select id="Loanterm" name="Loanterm" class="form-control">
+
+                                <option value="5">5 </option>
+                                <option value="10">10 </option>
+                                <option value="20">20 </option>
+
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                </div>
+          
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-danger">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    }
+    <!-- /.card-body -->
+    <div class="card-footer clearfix">
+
+    </div>
+</div>
+
